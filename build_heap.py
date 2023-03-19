@@ -1,21 +1,23 @@
 # python3
-
+# time the program: time python3 build_heap.py
+import sys
+import time
 
 def build_heap(data):
     swaps = []
-              
+    
     def siftDown(currentNode, nodeAmount, data):
         minIndex = currentNode
         leftChild = 2*currentNode + 1
         if leftChild < nodeAmount and data[leftChild] < data[minIndex]: # Check if the left child is smaller than the current node
-            minIndex = leftChild # If it is, then set the minIndex to the left child
+            minIndex = leftChild # Set the minIndex to the left child
             
-        rightChild = 2*currentNode + 2 # Can also be written as leftChild + 1 but this is a little more readable
+        rightChild = 2*currentNode + 2 # Can be replaced with leftChild + 1
         if rightChild < nodeAmount and data[rightChild] < data[minIndex]: # Check if the right child is smaller than the current node
-            minIndex = rightChild # If it is, then set the minIndex to the right child
+            minIndex = rightChild # Set the minIndex to the right child
             
         if currentNode != minIndex: # If the current node is not the smallest node (has been swapped to a child node), we add the swap to the swaps list
-            swaps.append((currentNode, minIndex)) # Add the swap to the swaps list
+            swaps.append((currentNode, minIndex))
             data[currentNode], data[minIndex] = data[minIndex], data[currentNode] # Swap the current node with the smallest node
             siftDown(minIndex, nodeAmount, data)
             
@@ -68,24 +70,12 @@ def main():
     # and give back all swaps
     swaps = build_heap(data)
 
-    # TODO: output how many swaps were made, 
-    # this number should be less than 4n (less than 4*len(data))
-
-
-    # output all swaps
+    # output the amount of swaps
     print(len(swaps))
-    '''
+    
+    # output the swaps
     for i, j in swaps:
         print(i, j)
-    '''
-    # Output last 30 swaps
-    for i in range(max(0, len(swaps)-30), len(swaps)):
-        print(swaps[i][0], swaps[i][1])
-    
-    # Output the first 30 data values
-    for i in range(0, min(30, len(data))):
-        print(data[i], end=" ")
-    print(len(data))
 
 
 if __name__ == "__main__":
